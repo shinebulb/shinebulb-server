@@ -13,4 +13,4 @@ app.use("/savedthemes", savedThemesRouter);
 const usersRouter = require('./routes/Users');
 app.use("/users", usersRouter);
 
-db.sequelize.sync().then(() => app.listen(3001));
+db.sequelize.sync().then(() => app.listen(3306));
