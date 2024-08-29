@@ -17,7 +17,7 @@
     "username": "root",
     "password": "IEjiPGNDcSeiHHLUBMMzwGdmgapebkBJ",
     "database": "railway",
-    "host": "mysql.railway.internal",
+    "host": "autorack.proxy.rlwy.net:15003",
     "dialect": "mysql"
   }
 }
