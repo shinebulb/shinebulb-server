@@ -15,9 +15,9 @@
   },
   "production": {
     "username": "root",
-    "password": null,
-    "database": "database_production",
-    "host": "127.0.0.1",
+    "password": "IEjiPGNDcSeiHHLUBMMzwGdmgapebkBJ",
+    "database": "railway",
+    "host": "mysql.railway.internal",
     "dialect": "mysql"
   }
 }
