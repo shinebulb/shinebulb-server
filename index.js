@@ -2,6 +2,7 @@ const express = require('express');
 const app = express();
 
 const cors = require('cors');
+require('dotenv').config();
 
 app.use(express.json());
 app.use(cors());
@@ -13,4 +14,4 @@ app.use("/savedthemes", savedThemesRouter);
 const usersRouter = require('./routes/Users');
 app.use("/users", usersRouter);
 
-db.sequelize.sync().then(() => app.listen(3306));
+db.sequelize.sync().then(() => app.listen(process.env.PORT || 3001));
