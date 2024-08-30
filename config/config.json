@@ -17,7 +17,7 @@
     "username": "root",
     "password": "tccKlsBXXarBGSBQDoKQLLoZiyrUJAFL",
     "database": "railway",
-    "host": "mysql.railway.internal:3306",
+    "host": "mysql.railway.internal",
     "dialect": "mysql"
   }
 }
