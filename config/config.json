@@ -14,10 +14,10 @@
     "dialect": "mysql"
   },
   "production": {
-    "username": "root",
-    "password": "tccKlsBXXarBGSBQDoKQLLoZiyrUJAFL",
-    "database": "railway",
-    "host": "mysql.railway.internal",
-    "dialect": "mysql"
+    "username": "${USERNAME}",
+    "password": "${PASSWORD}",
+    "database": "${DATABASE}",
+    "host": "${HOST}",
+    "dialect": "${DIALECT}"
   }
 }
