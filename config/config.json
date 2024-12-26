@@ -18,6 +18,6 @@
     "password": "${PASSWORD}",
     "database": "${DATABASE}",
     "host": "${HOST}",
-    "dialect": "${DIALECT}"
+    "dialect": "mysql"
   }
 }
