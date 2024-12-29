@@ -23,12 +23,18 @@ router.post("/login", async (req, res) => {
     const { username, password } = req.body;
     const user = await Users.findOne({ where: { username: username } });
 
-    if (!user) res.json({ error: "1" });
+    if (!user) {
+        res.json({ error: "1" });
+        return;
+    }
     
     bcrypt.compare(password, user.password).then(match => {
-        if (!match) res.json({ error: "1" });
+        if (!match) {
+            res.json({ error: "1" });
+            return;
+        }
 
-        const accessToken = sign({ username: user.username, id: user.id }, "5687ft8436t8bf743f8");
+        const accessToken = sign({ username: user.username, id: user.id }, process.env.ACCESS_TOKEN);
         res.json({ token: accessToken, username: username, id: user.id });
     });
 });

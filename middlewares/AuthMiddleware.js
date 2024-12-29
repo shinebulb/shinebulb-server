@@ -6,7 +6,7 @@ function validateToken(req, res, next) {
     if (!accessToken) return res.json({ error: "log in first!" })
     
     try {
-        const validToken = verify(accessToken, "5687ft8436t8bf743f8");
+        const validToken = verify(accessToken, process.env.ACCESS_TOKEN);
         req.user = validToken;
 
         if (validToken) {
