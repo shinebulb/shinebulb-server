@@ -30,7 +30,7 @@ router.post("/login", async (req, res) => {
     
     bcrypt.compare(password, user.password).then(match => {
         if (!match) {
-            res.json({ error: "1" });
+            res.json({ error: "2" });
             return;
         }
 
