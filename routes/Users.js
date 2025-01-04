@@ -87,6 +87,12 @@ router.get("/changeTheme", validateToken, async (req, res) => {
     res.json(lastTheme);
 });
 
+router.put("/invertTheme", validateToken, async (req, res) => {
+    const { invertTheme, id } = req.body;
+    await Users.update({ invertTheme: invertTheme }, { where: { id: id } });
+    res.json(invertTheme);
+});
+
 router.get("/userinfo/:username", async (req, res) => {
     const userinfo = await Users.findOne({ where: { username: req.params.username } });
     res.json(userinfo);
