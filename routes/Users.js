@@ -82,7 +82,7 @@ router.get("/settings/:id", validateToken, async (req, res) => {
 router.get("/changeTheme", validateToken, async (req, res) => {
     const lastTheme = await Users.findByPk(
         req.user.id,
-        { attributes: { exclude: ["id", "username", "password", "bulbCount", "bulbStatus", "language", "theme", "createdAt", "updatedAt"] } }
+        { attributes: { exclude: ["id", "username", "password", "bulbCount", "language", "theme", "createdAt", "updatedAt"] } }
     );
     res.json(lastTheme);
 });
