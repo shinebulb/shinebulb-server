@@ -27,6 +27,11 @@ module.exports = (sequelize, DataTypes) => {
         },
         lastFont: {
             type: DataTypes.STRING
+        },
+        invertTheme: {
+            type: DataTypes.BOOLEAN,
+            allowNull: true,
+            defaultValue: false,
         }
     });
 
