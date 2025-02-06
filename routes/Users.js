@@ -93,6 +93,12 @@ router.put("/invertTheme", validateToken, async (req, res) => {
     res.json(invertTheme);
 });
 
+router.put("/changeFont", validateToken, async (req, res) => {
+    const { font, id } = req.body;
+    await Users.update({ font: font }, { where: { id: id } });
+    res.json(font);
+});
+
 router.get("/userinfo/:username", async (req, res) => {
     const userinfo = await Users.findOne({ where: { username: req.params.username } });
     res.json(userinfo);
