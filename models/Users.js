@@ -32,7 +32,11 @@ module.exports = (sequelize, DataTypes) => {
             type: DataTypes.BOOLEAN,
             allowNull: true,
             defaultValue: false,
-        }
+        },
+        font: {
+            type: DataTypes.STRING,
+            allowNull: true
+        },
     });
 
     return Users
