@@ -6,6 +6,9 @@ module.exports = (sequelize, DataTypes) => {
             unique: true,
             allowNull: false
         },
+        emailToken: {
+            type: DataTypes.STRING
+        },
         emailVerified: {
             type: DataTypes.BOOLEAN,
             defaultValue: false,
