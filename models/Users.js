@@ -10,6 +10,19 @@ module.exports = (sequelize, DataTypes) => {
             type: DataTypes.STRING,
             allowNull: false
         },
+        email: {
+            type: DataTypes.STRING,
+            unique: true,
+            allowNull: false
+        },
+        verified: {
+            type: DataTypes.BOOLEAN,
+            allowNull: false,
+            defaultValue: false
+        },
+        emailToken: {
+            type: DataTypes.STRING
+        },
         bulbCount: {
             type: DataTypes.INTEGER
         },
