@@ -2,20 +2,55 @@ const express = require('express');
 const router = express.Router();
 const { Users } = require('../models');
 const bcrypt = require('bcryptjs');
+const { randomUUID } = require('crypto');
 const { sign } = require('jsonwebtoken');
+const transporter = require('../utils/email');
 const { validateToken } = require('../middlewares/AuthMiddleware.js');
 
 router.post("/", async (req, res) => {
 
-    const { username, password } = req.body;
+    const { email, username, password } = req.body;
 
-    bcrypt.hash(password, 10).then(hash => {
+    const usernameFound = await Users.findOne({ where: { username: username } });
+    const emailFound = await Users.findOne({ where: { email: email } });
+
+    if (usernameFound || emailFound) {
+        res.json({ error: "user or email already exists" });
+        return;
+    }
+
+    const emailToken = randomUUID();
+
+    bcrypt.hash(password, 10)
+    .then(hash => {
         Users.create({
+            email: email,
             username: username.toLowerCase(),
-            password: hash
+            password: hash,
+            emailToken: emailToken
         });
         res.json("user created successfully");
     });
+
+    const verifyLink = `http://localhost:5173/verify?token=${emailToken}`;
+
+    await transporter.sendMail({
+        from: process.env.SMTP_USER,
+        to: email,
+        subject: 'Please verify your email',
+        html: `<p>Welcome! Click <a href="${verifyLink}">here</a> to verify your address.</p>`
+    });
+});
+
+router.get('/verify', async (req, res) => {
+    const { token } = req.query;
+    const user = await Users.findOne({ where: { emailToken: token } });
+
+    if (!user) {
+        return res.status(400).json({ error: 'Invalid token' });
+    }
+
+    await user.update({ verified: true, emailToken: null });
 });
 
 router.post("/login", async (req, res) => {
