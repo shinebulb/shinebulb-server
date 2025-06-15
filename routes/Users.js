@@ -32,36 +32,39 @@ router.post("/", async (req, res) => {
         res.json("user created successfully");
     });
 
-    // const verifyLink = `http://localhost:5173/verify?token=${emailToken}`;
+    /* const verifyLink = `http://localhost:5173/verify?token=${emailToken}`;
 
-    // await transporter.sendMail({
-    //     from: process.env.SMTP_USER,
-    //     to: email,
-    //     subject: 'Please verify your email',
-    //     html: `<p>Welcome! Click <a href="${verifyLink}">here</a> to verify your address.</p>`
-    // });
+    await transporter.sendMail({
+        from: process.env.SMTP_USER,
+        to: email,
+        subject: 'Please verify your email',
+        html: `<p>Welcome! Click <a href="${verifyLink}">here</a> to verify your address.</p>`
+    }); */
 });
 
-// router.get('/verify', async (req, res) => {
-//     const { token } = req.query;
-//     const user = await Users.findOne({ where: { emailToken: token } });
+/* router.get('/verify', async (req, res) => {
+    const { token } = req.query;
+    const user = await Users.findOne({ where: { emailToken: token } });
 
-//     if (!user) {
-//         return res.status(400).json({ error: 'Invalid token' });
-//     }
+    if (!user) {
+        return res.status(400).json({ error: 'Invalid token' });
+    }
 
-//     await user.update({ verified: true, emailToken: null });
-// });
+    await user.update({ verified: true, emailToken: null });
+}); */
 
 router.post("/login", async (req, res) => {
 
-    const { username, password } = req.body;
-    const user = await Users.findOne({ where: { username: username } });
+    const { loginValue, password } = req.body;
+    const emailFound = await Users.findOne({ where: { email: loginValue } });
+    const usernameFound = await Users.findOne({ where: { username: loginValue } });
 
-    if (!user) {
+    if (!emailFound && !usernameFound) {
         res.json({ error: "1" });
         return;
     }
+
+    const user = emailFound ? emailFound : usernameFound
     
     bcrypt.compare(password, user.password).then(match => {
         if (!match) {
@@ -70,7 +73,7 @@ router.post("/login", async (req, res) => {
         }
 
         const accessToken = sign({ username: user.username, id: user.id }, process.env.ACCESS_TOKEN);
-        res.json({ token: accessToken, username: username, id: user.id });
+        res.json({ token: accessToken, username: user.username, id: user.id });
     });
 });
 
