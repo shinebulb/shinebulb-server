@@ -11,35 +11,36 @@ router.post("/", async (req, res) => {
 
     const { email, username, password } = req.body;
 
-    const usernameFound = await Users.findOne({ where: { username: username } });
     const emailFound = await Users.findOne({ where: { email: email } });
+    const usernameFound = await Users.findOne({ where: { username: username } });
 
-    if (usernameFound || emailFound) {
-        res.json({ error: "user or email already exists" });
+    if (emailFound || usernameFound) {
+        res.json({ error: `${1 + Number(!emailFound)}` });
         return;
     }
+    else {
+        const emailToken = randomUUID();
 
-    const emailToken = randomUUID();
-
-    bcrypt.hash(password, 10)
-    .then(hash => {
-        Users.create({
-            email: email,
-            username: username.toLowerCase(),
-            password: hash,
-            emailToken: emailToken
+        bcrypt.hash(password, 10)
+        .then(hash => {
+            Users.create({
+                email: email,
+                username: username.toLowerCase(),
+                password: hash,
+                emailToken: emailToken
+            });
+            res.json("user created successfully");
         });
-        res.json("user created successfully");
-    });
 
-    /* const verifyLink = `http://localhost:5173/verify?token=${emailToken}`;
+        /* const verifyLink = `http://localhost:5173/verify?token=${emailToken}`;
 
-    await transporter.sendMail({
-        from: process.env.SMTP_USER,
-        to: email,
-        subject: 'Please verify your email',
-        html: `<p>Welcome! Click <a href="${verifyLink}">here</a> to verify your address.</p>`
-    }); */
+        await transporter.sendMail({
+            from: process.env.SMTP_USER,
+            to: email,
+            subject: 'Please verify your email',
+            html: `<p>Welcome! Click <a href="${verifyLink}">here</a> to verify your address.</p>`
+        }); */
+    }
 });
 
 /* router.get('/verify', async (req, res) => {
