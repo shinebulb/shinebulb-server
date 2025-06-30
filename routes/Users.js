@@ -44,15 +44,25 @@ router.post("/", async (req, res) => {
 });
 
 router.get('/verify', async (req, res) => {
-    const { token } = req.query;
-    const user = await Users.findOne({ where: { emailToken: token } });
+    try {
+        const { token } = req.query;
+        const user = await Users.findOne({ where: { emailToken: token } });
 
-    if (!user) {
-        return res.status(400).json({ error: 'Invalid token' });
+        if (!user) {
+            return res.status(400).json({ error: 'Invalid token' });
+        }
+
+        user.verified = true;
+        user.emailToken = null;
+        await user.save();
+
+        res.json({ msg: 'Email verified successfully' });
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ error: 'Something went wrong' });
     }
-
-    await user.update({ verified: true, emailToken: null });
 });
+
 
 router.post("/login", async (req, res) => {
 
