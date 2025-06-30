@@ -32,18 +32,18 @@ router.post("/", async (req, res) => {
             res.json("user created successfully");
         });
 
-        /* const verifyLink = `http://localhost:5173/verify?token=${emailToken}`;
+        const verifyLink = `http://localhost:5173/verify?token=${emailToken}`;
 
         await transporter.sendMail({
             from: process.env.SMTP_USER,
             to: email,
             subject: 'Please verify your email',
             html: `<p>Welcome! Click <a href="${verifyLink}">here</a> to verify your address.</p>`
-        }); */
+        });
     }
 });
 
-/* router.get('/verify', async (req, res) => {
+router.get('/verify', async (req, res) => {
     const { token } = req.query;
     const user = await Users.findOne({ where: { emailToken: token } });
 
@@ -52,7 +52,7 @@ router.post("/", async (req, res) => {
     }
 
     await user.update({ verified: true, emailToken: null });
-}); */
+});
 
 router.post("/login", async (req, res) => {
 
