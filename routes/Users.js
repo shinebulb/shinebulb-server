@@ -69,7 +69,12 @@ router.post("/login", async (req, res) => {
     }
 
     const user = emailFound ? emailFound : usernameFound
-    
+
+    if (user.verified == 0) {
+        res.json({ error: "3" });
+        return;
+    }
+
     bcrypt.compare(password, user.password).then(match => {
         if (!match) {
             res.json({ error: "2" });
