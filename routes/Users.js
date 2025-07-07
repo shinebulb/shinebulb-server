@@ -34,7 +34,7 @@ router.post("/", async (req, res) => {
             res.json("user created successfully");
         });
 
-        const verifyLink = `http://localhost:5173/verify?token=${emailToken}`;
+        const verifyLink = `https://shinebulb-shinebulb-client-0a87.twc1.net/verify?token=${emailToken}`;
 
         await transporter.sendMail({
             from: process.env.SMTP_USER,
