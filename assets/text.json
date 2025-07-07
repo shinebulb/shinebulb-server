@@ -1,0 +1,24 @@
+[
+    {
+        "verificationEmail": [
+            "please verify your email",
+            "welcome to shinebulb!",
+            "thanks for signing up. to get started, please confirm your email address by clicking the button below.",
+            "verify email",
+            "if the button doesn't work, copy and paste this link into your browser:",
+            "if you didn’t sign up for shinebulb, you can safely ignore this email.",
+            "— the shinebulb team"
+        ]
+    },
+    {
+        "verificationEmail": [
+            "пожалуйста, подтвердите почту",
+            "добро пожаловать на shinebulb!",
+            "спасибо за регистрацию. чтобы начать пользоваться аккаунтом, подтвердите свою электронную почту нажатием кнопки ниже.",
+            "подтвердить почту",
+            "если кнопка не работает, скопируйте и вставьте в браузер данную ссылку:",
+            "если вы не регистрировались на shinebulb, можете проигнорировать это письмо.",
+            "— команда shinebulb"
+        ]
+    }
+]

@@ -6,9 +6,11 @@ const { randomUUID } = require('crypto');
 const { sign } = require('jsonwebtoken');
 const transporter = require('../utils/email');
 const { validateToken } = require('../middlewares/AuthMiddleware.js');
+const text = require('../assets/text.json');
 
 router.post("/", async (req, res) => {
 
+    const lang = parseInt(req.query.lang, 10) || 0;
     const { email, username, password } = req.body;
 
     const emailFound = await Users.findOne({ where: { email: email } });
@@ -37,33 +39,33 @@ router.post("/", async (req, res) => {
         await transporter.sendMail({
             from: process.env.SMTP_USER,
             to: email,
-            subject: 'Please verify your email',
+            subject: text[lang].verificationEmail[0],
             html: `
-                <body style="margin: 0; padding: 0; background-color: rgb(244, 240, 232); font-family: 'Trebuchet MS', serif; color: rgb(35, 35, 35);">
+                <body style="margin: 0; padding: 0; background-color: rgb(244, 240, 232); font-family: 'Roboto Slab', Georgia, 'Times New Roman', serif; color: rgb(35, 35, 35);">
                     <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background-color: rgb(244, 240, 232);">
                         <tr>
                             <td align="center">
                                 <table role="presentation" width="600" cellpadding="0" cellspacing="0" style="background-color: rgb(249, 249, 249); padding: 40px; border: rgb(43, 43, 43) 3px solid; border-radius: 15px;">
                                     <tr>
                                         <td align="center">
-                                            <h1 style="font-size: 24px; margin-bottom: 20px; text-transform: lowercase;">welcome to shinebulb</h1>
+                                            <h1 style="font-size: 24px; margin-bottom: 20px; text-transform: lowercase;">${text[lang].verificationEmail[1]}</h1>
                                             <p style="font-size: 16px; margin-bottom: 30px; text-transform: lowercase;">
-                                                thanks for signing up. to get started, please confirm your email address by clicking the button below.
+                                                ${text[lang].verificationEmail[2]}
                                             </p>
                                             <a href="${verifyLink}" style="display: inline-block; padding: 12px 24px; background-color: rgb(234, 234, 234); color: rgb(43, 43, 43); text-decoration: none; font-size: 16px; border: rgb(43, 43, 43) 3px solid; border-radius: 15px; text-transform: lowercase;">
-                                                verify email
+                                                ${text[lang].verificationEmail[3]}
                                             </a>
                                             <p style="font-size: 14px; margin-top: 30px; text-transform: lowercase;">
-                                                if the button doesn't work, copy and paste this link into your browser:
+                                                ${text[lang].verificationEmail[4]}
                                             </p>
                                             <p style="font-size: 14px; word-break: break-all; color: rgb(90, 90, 90); text-transform: lowercase;">
                                                 ${verifyLink}
                                             </p>
                                             <hr style="margin: 40px 0; border: none; border-top: 1px solid rgb(43, 43, 43);">
                                             <p style="font-size: 14px; text-transform: lowercase;">
-                                                if you didn’t sign up for shinebulb, you can safely ignore this email.
+                                                ${text[lang].verificationEmail[5]}
                                             </p>
-                                            <p style="font-size: 14px; margin-top: 10px; text-transform: lowercase;">— the shinebulb team</p>
+                                            <p style="font-size: 14px; margin-top: 10px; text-transform: lowercase;">${text[lang].verificationEmail[6]}</p>
                                         </td>
                                     </tr>
                                 </table>
