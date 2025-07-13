@@ -8,6 +8,8 @@ const transporter = require('../utils/email');
 const { validateToken } = require('../middlewares/AuthMiddleware.js');
 const text = require('../assets/text.json');
 
+require('dotenv').config();
+
 router.post("/", async (req, res) => {
 
     const lang = parseInt(req.query.lang, 10) || 0;
@@ -34,7 +36,7 @@ router.post("/", async (req, res) => {
             res.json("user created successfully");
         });
 
-        const verifyLink = `https://shinebulb32.netlify.app/verify?token=${emailToken}`;
+        const verifyLink = `${process.env.FRONTEND_URL}/verify?token=${emailToken}`;
 
         await transporter.sendMail({
             from: process.env.SMTP_USER,
