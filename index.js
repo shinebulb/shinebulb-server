@@ -11,6 +11,8 @@ const db = require('./models');
 
 const savedThemesRouter = require('./routes/SavedThemes');
 app.use("/savedthemes", savedThemesRouter);
+const savedFontsRouter = require('./routes/SavedFonts');
+app.use("/savedfonts", savedFontsRouter);
 const usersRouter = require('./routes/Users');
 app.use("/users", usersRouter);
 
