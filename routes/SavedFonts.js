@@ -21,7 +21,7 @@ router.post("/", validateToken, async (req, res) => {
     savedFont.userId = userId;
 
     const found = await SavedFonts.findOne({
-        where: { url: savedFont.url, userId: userId }
+        where: { fontFamily: savedFont.fontFamily, userId: userId }
     });
     if (!found) {
         await SavedFonts.create(savedFont);

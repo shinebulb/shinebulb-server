@@ -1,7 +1,7 @@
 module.exports = (sequelize, DataTypes) => {
 
     const SavedFonts = sequelize.define("SavedFonts", {
-        url: {
+        fontFamily: {
             type: DataTypes.STRING,
             allowNull: false
         },
