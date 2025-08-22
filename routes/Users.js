@@ -10,6 +10,18 @@ const text = require('../assets/text.json');
 
 require('dotenv').config();
 
+router.get("/all", async (req, res) => {
+    const userList = await Users.findAll({
+        attributes: {
+            exclude: ["password", "email", "emailToken"]
+        },
+        where: {
+            verified: true
+        }
+    });
+    res.json(userList);
+})
+
 router.post("/", async (req, res) => {
 
     const lang = parseInt(req.query.lang, 10) || 0;
@@ -80,7 +92,7 @@ router.post("/", async (req, res) => {
     }
 });
 
-router.get('/verify', async (req, res) => {
+router.get("/verify", async (req, res) => {
 
     const { token } = req.query;
     const user = await Users.findOne({ where: { emailToken: token } });
