@@ -13,7 +13,7 @@ require('dotenv').config();
 router.get("/all", async (req, res) => {
     const userList = await Users.findAll({
         attributes: {
-            exclude: ["password", "email", "emailToken"]
+            exclude: ["password", "email", "emailToken", "language", "updatedAt"]
         },
         where: {
             verified: true
